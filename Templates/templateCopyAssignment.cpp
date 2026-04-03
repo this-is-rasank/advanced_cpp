@@ -44,16 +44,34 @@ class Any{
     // const T& -> lvalue + rvalue
     // T&& ->  rvalue (move semantics)
     // T&& -> if Template perfect forwarding (lvalue + rvalue)
-    Any(const T& value) : ptr(new childClass<T>(value)) {}
+    Any(const T& value) : ptr(new childClass<T>(value)) {cout << "=> Any constructor called" << endl;}
     
-    // Copy constructor
-    Any(const Any& other) : ptr(other.ptr ? other.ptr->clone() : nullptr) {}
+    // Copy constructor(Will handle only lvalues if move constructor present)
+    Any(Any& other) : ptr(other.ptr ? other.ptr->clone() : nullptr) {cout << "=> Any copy constructor called" << endl;}
     
+    // Move constructor
+    Any(Any&& other) noexcept : ptr(other.ptr) {
+        cout << "=> Any move constructor called" << endl;
+        other.ptr = nullptr;
+    }
+
     // Copy assignment operator
-    Any& operator=(const Any& other) {
+    Any& operator=(Any& other) {
+        cout << "=> Any copy assignment operator called" << endl;
         if (this != &other) {
             delete ptr;
             ptr = other.ptr ? other.ptr->clone() : nullptr;
+        }
+        return *this;
+    }
+
+    // move assignment operator
+    Any& operator=(Any&& other) noexcept {
+        cout << "=> Any move assignment operator called" << endl;
+        if (this != &other) {
+            delete ptr;
+            ptr = other.ptr;
+            other.ptr = nullptr;
         }
         return *this;
     }
@@ -88,6 +106,15 @@ int main() {
     cout<< "a4 (copy of a2): ";
 
     a4.print();
+
+    Any a5 = std::move(a1); // Move assignment operator
+    cout<< "a5 (moved from a1): ";
+    a5.print();
+
+    Any a6;
+    a6 = std::move(5.57); // Move constructor
+    cout<< "a6 (moved from 5.57): ";
+    a6.print();
     
     return 0;
 }
