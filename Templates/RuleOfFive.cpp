@@ -3,6 +3,7 @@ using namespace std;
 
 class BaseClass{
     public:
+    BaseClass(){}
     virtual ~BaseClass(){}
     virtual void print() const = 0;
     virtual BaseClass* clone() const = 0;
