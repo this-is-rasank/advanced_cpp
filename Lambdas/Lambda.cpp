@@ -16,8 +16,9 @@ int main(){
     int f = 5;
     // capture list(for passing scope into the lambda function)
     // [=] for copy  all, [&] for refernce all parameters in current scope
-    auto cube = [f](){cout<< f*f*f << endl;};
-    cube();
+    // mutable allows to change the copy of f otherwise it is treated as const
+    auto cube = [f]()mutable{f=3;return f*f*f;};
+    cout<< cube()<<endl<<"f = "<<f<<endl;
 
     vector<int> v = {1, 2, 3, 4};
     vector<int> cubes;
