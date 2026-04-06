@@ -1,8 +1,9 @@
-#include<iostream>
+#include <iostream>
 
-int main(){
-    std::cout<< "C++ version: " << __cplusplus << std::endl;
-    // generally, the value of __cplusplus is: YYYYMM 
+int main()
+{
+    std::cout << "C++ version: " << __cplusplus << std::endl;
+    // generally, the value of __cplusplus is: YYYYMM
     // Version can be checked by YY"YY" part
     // C++98: 199711 (Not exactly 1998, but close enough)
     // C++11: 201103

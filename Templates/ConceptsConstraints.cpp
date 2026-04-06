@@ -1,5 +1,5 @@
-#include<iostream>
-#include<concepts>
+#include <iostream>
+#include <concepts>
 
 using namespace std;
 
@@ -11,14 +11,15 @@ using namespace std;
 //     a + 1; a*1;
 // };
 
-template<typename T>
+template <typename T>
 // constraint requires concept
-requires integral<T> || floating_point<T>
+    requires integral<T> || floating_point<T>
 
 // template<typename T>
 // // using custom defined conceppt
 // requires Numeric<T>
-T addIt(T a){
+T addIt(T a)
+{
     return a + 1;
 }
 
@@ -27,9 +28,10 @@ T addIt(T a){
 //     return a + 1;
 // };
 
-int main(){
- cout<<addIt(5)<<"-"<<addIt(5.6);
- char c = 'c';
- // passes as int
- cout<<"-"<<addIt('c');
+int main()
+{
+    cout << addIt(5) << "-" << addIt(5.6);
+    char c = 'c';
+    // passes as int
+    cout << "-" << addIt('c');
 }
